@@ -1,0 +1,18 @@
+<resources>
+    <string name="main_tv_info_string_1">布局练习</string>
+    <string name="main_tv_string_1">简单相对布局练习</string>
+    <string name="main_tv_string_2">Router切换练习</string>
+    <string name="main_tv_string_3">测试3</string>
+    <string name="main_btn_string_1">btn1</string>
+    <string name="main_btn_string_2">btn2</string>
+    <string name="main_btn_string_3">btn3</string>
+    <string name="title_activity_test3">TestActivity3</string>
+
+    <string name="splash_text_1">UI 练手</string>
+    <string name="splash_text_2">part 1</string>
+    <string name="home_text">首页</string>
+    <string name="find_text">发现</string>
+    <string name="user_text">我的</string>
+    <string name="community_text">通知</string>
+
+</resources>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.yifuyou.test_main.main.view1.TestActivity1"
+    android:background="@color/default_bg_color">
+
+    <View
+        android:id="@+id/mf_v1_1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/color_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.75"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="H, 3:1"
+        app:layout_constraintVertical_bias="0.55" />
+
+    <View
+        android:id="@+id/mf_v1_2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/color_2"
+        app:layout_constraintStart_toStartOf="@id/mf_v1_1"
+        app:layout_constraintWidth_percent="0.65"
+        app:layout_constraintTop_toBottomOf="@id/mf_v1_1"
+        app:layout_constraintBottom_toTopOf="@id/mf_v1_3"
+        app:layout_constraintDimensionRatio="H, 5:1"
+        android:elevation="@null" />
+
+    <View
+        android:id="@+id/mf_v1_3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/color_2"
+        app:layout_constraintStart_toStartOf="@id/mf_v1_1"
+        app:layout_constraintWidth_percent="0.65"
+        app:layout_constraintTop_toBottomOf="@id/mf_v1_2"
+        app:layout_constraintBottom_toTopOf="@id/mf_v1_4"
+        app:layout_constraintDimensionRatio="H, 5:1"
+        android:elevation="@null" />
+
+    <View
+        android:id="@+id/mf_v1_4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/color_2"
+        app:layout_constraintStart_toStartOf="@id/mf_v1_1"
+        app:layout_constraintWidth_percent="0.65"
+        app:layout_constraintTop_toBottomOf="@id/mf_v1_3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="H, 5:1"
+        android:elevation="@null" />
+
+    <View
+        android:id="@+id/mf_v_2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintWidth_percent="0.60"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/mf_v1_1"
+        android:background="@color/color_1" />
+
+    <ImageButton
+        android:id="@+id/imageButton_main"
+        android:background="@drawable/msg_ic_bg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constrainedWidth="true"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintWidth_percent="0.20"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintCircle="@id/mf_v_2"
+        app:layout_constraintCircleRadius="100dp"
+        app:layout_constraintCircleAngle="135"
+        tools:ignore="MissingConstraints"
+        android:contentDescription="TODO" />
+
+    <ImageButton
+        android:id="@+id/imageButton_main_act1"
+        android:background="@drawable/img_ic_3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constrainedWidth="true"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintWidth_percent="0.15"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintCircle="@id/imageButton_main"
+        app:layout_constraintCircleRadius="100dp"
+        app:layout_constraintCircleAngle="95"
+        tools:ignore="MissingConstraints"
+        android:contentDescription="TODO"
+        android:elevation="@null" />
+
+    <ImageButton
+        android:id="@+id/imageButton_main_act2"
+        android:background="@drawable/img_ic_2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constrainedWidth="true"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintWidth_percent="0.15"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintCircle="@id/imageButton_main"
+        app:layout_constraintCircleRadius="100dp"
+        app:layout_constraintCircleAngle="52"
+        tools:ignore="MissingConstraints"
+        android:contentDescription="TODO"
+        android:elevation="@null" />
+
+    <ImageButton
+        android:id="@+id/imageButton_main_act3"
+        android:background="@drawable/img_ic_1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constrainedWidth="true"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintWidth_percent="0.15"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintCircle="@id/imageButton_main"
+        app:layout_constraintCircleRadius="100dp"
+        app:layout_constraintCircleAngle="5"
+        tools:ignore="MissingConstraints"
+        android:contentDescription="TODO"
+        android:elevation="@null" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
