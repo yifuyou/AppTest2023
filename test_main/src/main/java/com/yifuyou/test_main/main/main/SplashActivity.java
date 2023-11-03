@@ -1,6 +1,5 @@
 package com.yifuyou.test_main.main.main;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
@@ -15,7 +14,7 @@ import com.yifuyou.test_main.R;
 @Route(path = "/main/splash")
 public class SplashActivity extends AppCompatActivity {
 
-    private Handler mHandler = new Handler();
+    private final Handler mHandler = new Handler();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -25,7 +24,7 @@ public class SplashActivity extends AppCompatActivity {
                 .titleBar(findViewById(R.id.top_view))
                 .hideBar(BarHide.FLAG_HIDE_NAVIGATION_BAR)
                 .init();
-        mHandler.postDelayed(this::startToMain, 3000);
+        mHandler.postDelayed(this::startToMain, 1000);
     }
 
     private void startToMain() {
