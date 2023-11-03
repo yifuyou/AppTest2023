@@ -8,46 +8,46 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 
-open class BaseFragment : Fragment(){
+abstract class BaseFragment : Fragment(){
 
-    lateinit var fragmentTag:String
+    abstract fun getFragmentTag():String
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.e("TAG", "onCreateView: $fragmentTag" )
+        Log.e("TAG", "onCreateView: ${getFragmentTag()}" )
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        Log.e("TAG", "onAttach: $fragmentTag" )
+        Log.e("TAG", "onAttach: ${getFragmentTag()}" )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.e("TAG", "onCreate: $fragmentTag" )
+        Log.e("TAG", "onCreate: ${getFragmentTag()}" )
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        Log.e("TAG", "onActivityCreated: $fragmentTag" )
+        Log.e("TAG", "onActivityCreated: ${getFragmentTag()}" )
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.e("TAG", "onDestroyView: $fragmentTag" )
+        Log.e("TAG", "onDestroyView: ${getFragmentTag()}" )
     }
 
     override fun onDetach() {
         super.onDetach()
-        Log.e("TAG", "onDetach: $fragmentTag" )
+        Log.e("TAG", "onDetach: ${getFragmentTag()}" )
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.e("TAG", "onDestroy: $fragmentTag" )
+        Log.e("TAG", "onDestroy: ${getFragmentTag()}" )
     }
 }

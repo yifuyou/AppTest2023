@@ -5,17 +5,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.yifuyou.test_main.R
+import com.yifuyou.test_main.main.main.FragmentItemName
 import com.yifuyou.test_main.main.main.FragmentRouterPath
 
 @Route(path = FragmentRouterPath.Home.PAGE_COMMUNICAT)
 class CommunityFragment : BaseFragment() {
+
+    override fun getFragmentTag(): String {
+        return FragmentItemName.通知.toString()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return super.onCreateView(inflater, container, savedInstanceState)
+        return inflater.inflate(R.layout.fragment_comunity, container, false)
     }
 
 }
