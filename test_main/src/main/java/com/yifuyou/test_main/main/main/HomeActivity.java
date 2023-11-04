@@ -2,29 +2,24 @@ package com.yifuyou.test_main.main.main;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.databinding.DataBindingUtil;
 import androidx.viewpager.widget.ViewPager;
-import androidx.viewpager2.widget.ViewPager2;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.gyf.immersionbar.ImmersionBar;
 import com.yifuyou.test_main.R;
+import com.yifuyou.test_main.databinding.HomeActivityBinding;
 import com.yifuyou.test_main.main.main.adapter.ViewPagerAdapter;
 import com.yifuyou.test_main.main.main.fragment.BaseFragment;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.function.BiConsumer;
 
 public class HomeActivity extends AppCompatActivity {
     public static void start(Context context) {
@@ -41,6 +36,8 @@ public class HomeActivity extends AppCompatActivity {
 
     private int currentId;
 
+    private HomeActivityBinding dataBinding;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +51,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        setContentView(R.layout.home_activity);
+        dataBinding = DataBindingUtil.setContentView(this, R.layout.home_activity);
         imageViews = new ArrayList<>();
         ImageView imgV1= findViewById(R.id.img_btn_home);
         imageViews.add(imgV1);
@@ -71,6 +68,7 @@ public class HomeActivity extends AppCompatActivity {
         initFragment();
         initViewPager();
         imgV1.setColorFilter(R.color.teal_200);
+        dataBinding.setTagText(FragmentItemName.我的.toString());
     }
 
     private void initFragment() {
@@ -111,6 +109,7 @@ public class HomeActivity extends AppCompatActivity {
                 if (imageView != null) {
                     imageView.setColorFilter(R.color.teal_200);
                 }
+                dataBinding.setTagText(fragments.get(position).getFragmentTag());
             }
 
             @Override
