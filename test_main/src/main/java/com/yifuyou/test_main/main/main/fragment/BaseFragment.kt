@@ -6,11 +6,20 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 
-abstract class BaseFragment : Fragment(){
+abstract class BaseFragment<T : ViewDataBinding> : Fragment(){
 
     abstract fun getFragmentTag():String
+    abstract fun getLayoutId():Int
+    abstract fun initView():Unit
+    abstract fun initObject():Unit
+
+    var firstInit : Boolean = true
+
+    lateinit var dataBinding : T
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -18,8 +27,21 @@ abstract class BaseFragment : Fragment(){
         savedInstanceState: Bundle?
     ): View? {
         Log.e("TAG", "onCreateView: ${getFragmentTag()}" )
-        return super.onCreateView(inflater, container, savedInstanceState)
+        if(!firstInit) {
+            return dataBinding.root
+        }
+        firstInit = false
+        dataBinding = DataBindingUtil.inflate<T>(
+            inflater,
+            getLayoutId(),
+            container,
+            false
+        )
+        initView()
+        initObject()
+        return dataBinding.root
     }
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
