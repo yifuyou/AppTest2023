@@ -42,7 +42,6 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment(){
         return dataBinding.root
     }
 
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         Log.e("TAG", "onAttach: ${getFragmentTag()}" )

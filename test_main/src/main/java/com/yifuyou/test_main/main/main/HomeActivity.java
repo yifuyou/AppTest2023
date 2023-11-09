@@ -2,17 +2,13 @@ package com.yifuyou.test_main.main.main;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
 import androidx.viewpager.widget.ViewPager;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.gyf.immersionbar.ImmersionBar;
 import com.yifuyou.test_main.R;
 import com.yifuyou.test_main.databinding.HomeActivityBinding;
 import com.yifuyou.test_main.main.main.adapter.ViewPagerAdapter;
@@ -21,9 +17,20 @@ import com.yifuyou.test_main.main.main.fragment.BaseFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeActivity extends AppCompatActivity {
+@Route(path = "/main/home")
+public class HomeActivity extends BaseActivity<HomeActivityBinding> {
     public static void start(Context context) {
         context.startActivity(new Intent(context,HomeActivity.class));
+    }
+
+    @Override
+    int getTopColor() {
+        return R.color.color_icon_bg;
+    }
+
+    @Override
+    int getLayoutId() {
+        return R.layout.home_activity;
     }
 
     private List<BaseFragment> fragments;
@@ -36,22 +43,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private int currentId;
 
-    private HomeActivityBinding dataBinding;
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        ImmersionBar.with(this)
-                .statusBarColor(R.color.color_4)
-                .navigationBarColor(R.color.color_4)
-                .fitsSystemWindows(true)
-                .autoDarkModeEnable(true)
-                .init();
-        initView();
-    }
-
-    private void initView() {
-        dataBinding = DataBindingUtil.setContentView(this, R.layout.home_activity);
+    void initView() {
         imageViews = new ArrayList<>();
         ImageView imgV1= findViewById(R.id.img_btn_home);
         imageViews.add(imgV1);

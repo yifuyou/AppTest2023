@@ -1,10 +1,12 @@
 package com.yifuyou.test_main.main.main.fragment
 
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.yifuyou.test_main.R
 import com.yifuyou.test_main.databinding.FragmentComunityBinding
 import com.yifuyou.test_main.main.main.FragmentItemName
 import com.yifuyou.test_main.main.main.FragmentRouterPath
+import com.yifuyou.test_main.main.main.adapter.CommunityFragmentAdapter
 
 @Route(path = FragmentRouterPath.Home.PAGE_COMMUNICAT)
 class CommunityFragment : BaseFragment<FragmentComunityBinding>() {
@@ -16,12 +18,14 @@ class CommunityFragment : BaseFragment<FragmentComunityBinding>() {
     override fun getLayoutId(): Int = R.layout.fragment_comunity
 
     override fun initView() {
-        print("")
+        with(dataBinding.communityList) {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            adapter = CommunityFragmentAdapter()
+        }
     }
 
     override fun initObject() {
         print("")
     }
-
 
 }

@@ -3,14 +3,14 @@
     package="com.yifuyou.test_main">
 
     <application>
-        <activity
-            android:name=".MainActivity"
-            android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
+<!--        <activity-->
+<!--            android:name=".MainActivity"-->
+<!--            android:exported="true" >-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN"/>-->
+<!--                <category android:name="android.intent.category.LAUNCHER"/>-->
+<!--            </intent-filter>-->
+<!--        </activity>-->
 
         <activity android:name="com.yifuyou.test_main.main.view1.TestActivity1"
             android:launchMode="singleInstance"/>
@@ -21,8 +21,17 @@
         <activity android:name="com.yifuyou.test_main.main.view2.TestActivity2User"
             android:launchMode="singleInstance" />
         <activity android:name=".main.main.SplashActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+
+        </activity>
         <activity android:name=".main.main.HomeActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity android:name=".main.main.CommunityActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"/>
     </application>
 

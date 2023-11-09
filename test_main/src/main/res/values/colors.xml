@@ -15,5 +15,6 @@
     <color name="color_bg">#AAFFFFFF</color>
     <color name="color_icon_bg">#AAAA88</color>
     <color name="color_bottom_bg">#88AA88</color>
-
+    <color name="color_item_bg">#992288FF</color>
+    <color name="color_item_press_bg">#992222AA</color>
 </resources>
