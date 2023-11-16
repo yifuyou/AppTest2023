@@ -10,3 +10,4 @@ rootProject.name = "testApp3"
 include ':app'
 include ':test_main'
 include ':test_common'
+include ':web'

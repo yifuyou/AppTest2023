@@ -3,8 +3,6 @@ package com.yifuyou.test_main.main.main.placeholder
 import com.yifuyou.test_main.R
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.collections.MutableList
-import kotlin.collections.MutableMap
 import kotlin.collections.set
 
 object MoreContent {
@@ -30,7 +28,7 @@ object MoreContent {
     private fun createMoreItem(position: Int): MoreItem {
         return MoreItem(
             position.toString(),
-            R.drawable.img_ic_3, "震惊！！ *本国竟然.......... " + position, "虚拟时报", ""
+            R.drawable.img_ic_3, "震惊！！ *本国竟然...... " + position, "虚拟时报", ""
         )
     }
 

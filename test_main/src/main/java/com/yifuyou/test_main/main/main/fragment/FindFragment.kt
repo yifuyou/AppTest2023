@@ -19,14 +19,10 @@ class FindFragment : BaseFragment<FragmentFindBinding>() {
     override fun initView() {
         val beginTransaction = childFragmentManager.beginTransaction()
         FindFragmentProvider().allFragments[0]?.let {
-            beginTransaction.add(R.id.fragment_place_1,
-                it
-            )
+            beginTransaction.add(R.id.fragment_place_1, it)
         }
         FindFragmentProvider().allFragments[1]?.let {
-            beginTransaction.add(R.id.fragment_place_2,
-                it
-            )
+            beginTransaction.add(R.id.fragment_place_2, it)
         }
         beginTransaction.commit()
     }

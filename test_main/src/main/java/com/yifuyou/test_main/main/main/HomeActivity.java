@@ -60,7 +60,7 @@ public class HomeActivity extends BaseActivity<HomeActivityBinding> {
         initFragment();
         initViewPager();
         imgV1.setColorFilter(R.color.teal_200);
-        dataBinding.setTagText(FragmentItemName.我的.toString());
+        dataBinding.setTagText(FragmentItemName.首页.toString());
     }
 
     private void initFragment() {
