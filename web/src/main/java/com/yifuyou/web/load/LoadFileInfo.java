@@ -7,6 +7,9 @@ public class LoadFileInfo {
 
     String filePath;
 
+    // 文件下载地址
+    String from;
+
     private LoadFileInfo(){
     }
 

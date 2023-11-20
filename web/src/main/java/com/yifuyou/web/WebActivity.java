@@ -1,6 +1,8 @@
 package com.yifuyou.web;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -29,7 +31,9 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.yifuyou.web.databinding.WebLayoutBinding;
 import com.yifuyou.web.load.Constants;
 import com.yifuyou.web.load.DownloadUtil;
+import com.yifuyou.web.load.FileUtils;
 import com.yifuyou.web.load.LoadHandler;
+import com.yifuyou.web.load.SharedPreferenceUtil;
 
 import java.util.Locale;
 
@@ -136,6 +140,8 @@ public class WebActivity extends AppCompatActivity {
                 String fileName = getFileName(contentDisposition);
                 Log.i("DownloadListener", "onDownloadStart: fName=" + fileName);
 
+                fileName = FileUtils.checkAndGetNextFileName(FileUtils.getStoredPath(), fileName);
+
                 Toast.makeText(WebActivity.this, "start load " + fileName, Toast.LENGTH_SHORT).show();
 
                 String loadId = DownloadUtil.buildLoader(url, userAgent, contentDisposition, fileName, contentLength);
@@ -146,6 +152,13 @@ public class WebActivity extends AppCompatActivity {
 
         ARouter.getInstance().inject(this);
         trySetUrl(intentUrl);
+        dataBinding.imgIcon.setOnClickListener( v -> {
+                    Intent intent = new Intent(this, LoadPageActivity.class);
+                    startActivity(intent);
+                }
+        );
+
+        SharedPreferenceUtil.getOrCreateSp(getBaseContext(), DownloadUtil.TASK_RECORD, Context.MODE_PRIVATE);
     }
 
     private String getFileName(String contentDisposition) {
@@ -173,6 +186,7 @@ public class WebActivity extends AppCompatActivity {
         dataBinding.downloadingBox.setVisibility(View.VISIBLE);
         dataBinding.downloadingPBar.setVisibility(View.VISIBLE);
         dataBinding.imgIcon.setColorFilter(Color.argb(0,0,0,0));
+
     }
 
     private void loading(int process) {
@@ -181,7 +195,7 @@ public class WebActivity extends AppCompatActivity {
     }
 
     private void loadFinish(){
-        dataBinding.imgIcon.setColorFilter(Color.alpha(255));
+        dataBinding.imgIcon.setColorFilter(Color.alpha(0));
         dataBinding.imgIcon.setClickable(false);
         dataBinding.downloadingPBar.setVisibility(View.GONE);
 
@@ -273,9 +287,6 @@ public class WebActivity extends AppCompatActivity {
         for (int i = 0; i < permissions.length; i++) {
             Log.i("Permission", "onRequestPermissionsResult:" + permissions[i] + " : " + grantResults[i]);
         }
-
-
-
     }
 
     @Override
@@ -294,5 +305,12 @@ public class WebActivity extends AppCompatActivity {
         // 关闭支持javaScript
         webSettings.setJavaScriptEnabled(false);
         super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.i(TAG, "onDestroy");
+        DownloadUtil.release();
+        super.onDestroy();
     }
 }

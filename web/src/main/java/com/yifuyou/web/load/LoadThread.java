@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
 
+import com.yifuyou.web.load.db.DataBaseUtil;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -38,23 +40,24 @@ public class LoadThread {
 
     private Runnable runnable;
 
+    private LoadFileRecord fileInfo;
+
+    private boolean hasInit = false;
+
     private LoadThread(){}
 
     public static LoadThread Builder(){
         return new LoadThread();
     }
 
-    public LoadFileInfo getFileInfo() {
+    public LoadFileRecord getFileInfo() {
         return fileInfo;
     }
 
-    public void setFileInfo(LoadFileInfo fileInfo) {
+    public void setFileInfo(LoadFileRecord fileInfo) {
         this.fileInfo = fileInfo;
+        this.fileInfo.setUrl(url);
     }
-
-    private LoadFileInfo fileInfo;
-
-    private boolean hasInit = false;
 
     public String getUrl() {
         return url;
@@ -105,6 +108,10 @@ public class LoadThread {
         return runnable;
     }
 
+    public long getLatestTime() {
+        return lastReportTime;
+    }
+
     public String buildTask() {
         if(hasInit) {
             Log.e(TAG, "buildTask has init");
@@ -114,8 +121,13 @@ public class LoadThread {
         runnable = new Runnable() {
             @Override
             public void run() {
-                File file = new File(fileInfo.filePath + fileInfo.fileName);
-                checkFile(file);
+                if (!FileUtils.createFile(fileInfo.getPath())) {
+                    Log.e(TAG, "run: file create fail");
+                    return;
+                }
+                fileInfo.setsTime(System.currentTimeMillis());
+                DataBaseUtil.insertLoadFileRecord(fileInfo);
+                File file = new File(fileInfo.getPath());
                 OkHttpClient httpClient = new OkHttpClient();
                 Request request = new Request.Builder().url(url).get().build();
                 Call call = httpClient.newCall(request);
@@ -162,30 +174,20 @@ public class LoadThread {
         return loadId;
     }
 
-    private void checkFile(File file) {
-        Log.i(TAG, "checkFile: " + file.getPath());
-        try {
-            if (file.exists()) {
-                Log.i(TAG, "exists: " + file.exists());
-                return;
-            }
-            if (file.createNewFile()) {
-                Log.e(TAG, "checkFile: " + file.exists() );
-            }
-            Log.i(TAG, "checkFile: " + file.exists());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     private void sendMessage(int what, String loadId, long now) {
         if (what == Constants.TAG_LOADING_REPORT) {
+            fileInfo.setLoadLength(now);
             if (System.currentTimeMillis() - lastReportTime < reportApartTime) {
                 return;
             }
-            lastReportTime = System.currentTimeMillis();
+        } else if(what == Constants.TAG_START_LOAD) {
+            fileInfo.setState(Constants.STATE_STRING_LOAD_UNFINISH);
+        } else if(what == Constants.TAG_LOADING_FINISH) {
+            fileInfo.setState(Constants.STATE_STRING_LOAD_SUCCESS);
         }
 
+        lastReportTime = System.currentTimeMillis();
+        fileInfo.setlTime(lastReportTime);
         Message msg = Message.obtain(LoadHandler.getInstance());
         msg.what = what;
         Bundle bundle = msg.getData();
