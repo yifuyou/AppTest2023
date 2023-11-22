@@ -14,7 +14,6 @@ import com.yifuyou.web.load.SharedPreferenceUtil;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -35,6 +34,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.databinding.DataBindingUtil;
 
 @Route(path = "/web/main/")
@@ -63,8 +63,16 @@ public class WebActivity extends AppCompatActivity {
         dataBinding = DataBindingUtil.setContentView(this, R.layout.web_layout);
         progressBar = dataBinding.progressBar;
         progressBar.setVisibility(View.GONE);
-        webView = dataBinding.webView;
-        webSettings = dataBinding.webView.getSettings();
+        webView = new WebView(getApplicationContext());
+
+        ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(
+                ConstraintLayout.LayoutParams.MATCH_PARENT,
+                ConstraintLayout.LayoutParams.MATCH_PARENT);
+        webView.setElevation(-1);
+        addContentView(webView, layoutParams);
+
+
+        webSettings = webView.getSettings();
 
         // 设置自适应屏幕
         webSettings.setUseWideViewPort(true);
@@ -153,9 +161,11 @@ public class WebActivity extends AppCompatActivity {
         ARouter.getInstance().inject(this);
         trySetUrl(intentUrl);
         dataBinding.imgIcon.setOnClickListener( v -> {
-                    Intent intent = new Intent(this, LoadPageActivity.class);
-                    startActivity(intent);
-                }
+//                    Intent intent = new Intent(this, LoadPageActivity.class);
+//                    startActivity(intent);
+
+
+            }
         );
 
         SharedPreferenceUtil.getOrCreateSp(getBaseContext(), DownloadUtil.TASK_RECORD, Context.MODE_PRIVATE);
@@ -296,7 +306,7 @@ public class WebActivity extends AppCompatActivity {
         // 支持javaScript
         webSettings.setJavaScriptEnabled(true);
 
-        dataBinding.webView.loadUrl(url);
+        webView.loadUrl(url);
         Log.i("TAG", "onResume: " + url);
     }
 
@@ -309,6 +319,8 @@ public class WebActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        webView.loadUrl(null);
+        webView=null;
         super.onDestroy();
     }
 }
