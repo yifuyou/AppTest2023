@@ -21,7 +21,10 @@ public class WebDbHelper extends SQLiteOpenHelper {
                 " fromUrl VARCHAR(120)," +
                 " state int," +
                 " startTime Long," +
-                " latestTime Long)");
+                " latestTime Long," +
+                " loadLength Long," +
+                " fileLength Long)"
+        );
     }
 
     @Override

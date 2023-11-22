@@ -1,21 +1,27 @@
 package com.yifuyou.web.load;
 
-import android.os.Bundle;
-import android.os.Message;
-import android.util.Log;
-
-import com.yifuyou.web.load.db.DataBaseUtil;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
+import com.yifuyou.web.load.db.DataBaseUtil;
+
+import android.os.Bundle;
+import android.os.Message;
+import android.util.Log;
 
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+/**
+ *
+ *
+ * @author Administrator
+ * @since 2023/11/10
+ */
 public class LoadThread {
     private static final String TAG = "LoadThread";
     
@@ -32,6 +38,9 @@ public class LoadThread {
 
     private long contentLength = 0L;
 
+    //上次下载进度
+    private long lastLength = 0L;
+
     //上次上报时间
     private long lastReportTime = 0L;
 
@@ -43,6 +52,8 @@ public class LoadThread {
     private LoadFileRecord fileInfo;
 
     private boolean hasInit = false;
+
+    private boolean isReLoad = false;
 
     private LoadThread(){}
 
@@ -56,7 +67,12 @@ public class LoadThread {
 
     public void setFileInfo(LoadFileRecord fileInfo) {
         this.fileInfo = fileInfo;
-        this.fileInfo.setUrl(url);
+        if (fileInfo.getUrl().isEmpty()) {
+            this.fileInfo.setUrl(url);
+        } else {
+            url = fileInfo.getUrl();
+        }
+
     }
 
     public String getUrl() {
@@ -121,6 +137,7 @@ public class LoadThread {
         runnable = new Runnable() {
             @Override
             public void run() {
+                Log.i(TAG, "run: start loading " + fileInfo.getName());
                 if (!FileUtils.createFile(fileInfo.getPath())) {
                     Log.e(TAG, "run: file create fail");
                     return;
@@ -129,7 +146,11 @@ public class LoadThread {
                 DataBaseUtil.insertLoadFileRecord(fileInfo);
                 File file = new File(fileInfo.getPath());
                 OkHttpClient httpClient = new OkHttpClient();
-                Request request = new Request.Builder().url(url).get().build();
+
+                Request request = new Request.Builder().url(url)
+                        .header("Range", "bytes=" + fileInfo.getLoadLength() + "-" + fileInfo.getFileLength())
+                        .get()
+                        .build();
                 Call call = httpClient.newCall(request);
 
                 Response execute = null;
@@ -176,12 +197,14 @@ public class LoadThread {
 
     private void sendMessage(int what, String loadId, long now) {
         if (what == Constants.TAG_LOADING_REPORT) {
-            fileInfo.setLoadLength(now);
+            fileInfo.setLoadLength(lastLength + now);
             if (System.currentTimeMillis() - lastReportTime < reportApartTime) {
                 return;
             }
         } else if(what == Constants.TAG_START_LOAD) {
-            fileInfo.setState(Constants.STATE_STRING_LOAD_UNFINISH);
+            isReLoad = fileInfo.getLoadLength() != 0L;
+            lastLength = fileInfo.getLoadLength();
+            fileInfo.setState(Constants.STATE_STRING_LOADING);
         } else if(what == Constants.TAG_LOADING_FINISH) {
             fileInfo.setState(Constants.STATE_STRING_LOAD_SUCCESS);
         }
@@ -196,5 +219,6 @@ public class LoadThread {
         msg.setData(bundle);
         Log.i(TAG, "sendMessage: " + msg.toString());
         LoadHandler.getInstance().sendMessage(msg);
+        DataBaseUtil.updateLoadFileRecordTime(fileInfo);
     }
 }

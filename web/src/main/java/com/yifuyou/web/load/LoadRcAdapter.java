@@ -5,6 +5,13 @@
 
 package com.yifuyou.web.load;
 
+import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
+
+import com.yifuyou.web.databinding.LoadItemInfoBinding;
+import com.yifuyou.web.load.db.DataBaseUtil;
+
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,15 +21,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.yifuyou.web.databinding.LoadItemInfoBinding;
-import com.yifuyou.web.load.db.DataBaseUtil;
-
-import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
-
 
 public class LoadRcAdapter extends RecyclerView.Adapter<LoadRcAdapter.ViewHolder> {
+    private static final String TAG = "LoadRcAdapter";
+
     List<LoadFileRecord> mData;
 
     Handler mHandler;
@@ -35,9 +37,20 @@ public class LoadRcAdapter extends RecyclerView.Adapter<LoadRcAdapter.ViewHolder
             }
         });
         mData.forEach(lf ->{
-            Log.d("TAG", "LoadRcAdapter: "+ lf.toString());
+            Log.d(TAG, "LoadRcAdapter: "+ lf.toString());
         });
         mHandler = handler;
+
+        mData.sort((f1, f2)->{
+            if (f1.getlTime() != 0 && f2.getlTime() != 0) {
+                return (int)(f1.getlTime() - f2.getlTime());
+            }
+
+            if (f1.getsTime() != 0 && f2.getsTime() != 0) {
+                return (int)(f1.getsTime() - f2.getsTime());
+            }
+            return 1;
+        });
     }
 
 
@@ -52,21 +65,36 @@ public class LoadRcAdapter extends RecyclerView.Adapter<LoadRcAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         LoadFileRecord loadFileRecord = mData.get(position);
+        setItemView(holder, loadFileRecord, false);
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Log.i(TAG, "onLongClick: ");
+                if (DownloadUtil.resumeLoad(loadFileRecord)) {
+                    setItemView(holder, loadFileRecord, true);
+                }
+                return false;
+            }
+        });
+    }
+
+    private void setItemView(ViewHolder holder, LoadFileRecord loadFileRecord, boolean isResume){
         holder.mBinding.itemName.setText(loadFileRecord.getName());
-        if (Constants.STATE_STRING_LOAD_SUCCESS.equals(loadFileRecord.getState()) ||
-                Constants.STATE_STRING_LOAD_FAILED.equals(loadFileRecord.getState())) {
+        if (loadFileRecord.isFinished()) {
             holder.mBinding.itemState.setText(loadFileRecord.getState());
             holder.mBinding.itemProgress.setVisibility(View.GONE);
             holder.mBinding.itemLoading.setText(CommandUtil.getTimeByLong(loadFileRecord.getlTime()));
             return;
         }
-        setStateAndProgress(holder.mBinding, loadFileRecord, 0L);
-        holder.mBinding.itemState.setText(Constants.STATE_STRING_LOADING);
+
+        setStateAndProgress(holder.mBinding, loadFileRecord, loadFileRecord.getLoadLength());
+        holder.mBinding.itemState.setText(loadFileRecord.getState());
         loadFileRecord.addObserver(new Observer() {
             @Override
             public void update(Observable o, Object arg) {
                 mHandler.post(()->{
-                        setStateAndProgress(holder.mBinding, loadFileRecord, (long)arg);
+                    setStateAndProgress(holder.mBinding, loadFileRecord, (long)arg);
                 });
             }
         });
@@ -86,7 +114,6 @@ public class LoadRcAdapter extends RecyclerView.Adapter<LoadRcAdapter.ViewHolder
     @Override
     public void onViewDetachedFromWindow(@NonNull ViewHolder holder) {
         super.onViewDetachedFromWindow(holder);
-
     }
 
     @Override

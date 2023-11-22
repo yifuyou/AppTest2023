@@ -1,15 +1,15 @@
 package com.yifuyou.web.load.db;
 
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import android.util.Log;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.yifuyou.web.load.CommandUtil;
 import com.yifuyou.web.load.LoadFileRecord;
 
-import java.util.ArrayList;
-import java.util.List;
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.util.Log;
 
 public class DataBaseUtil {
     public static final String TAG = "DataBaseUtil";
@@ -35,14 +35,18 @@ public class DataBaseUtil {
         values.put("state", CommandUtil.getStateByString(loadFileRecord.getState()));
         values.put("startTime", loadFileRecord.getsTime());
         values.put("latestTime", loadFileRecord.getlTime());
+        values.put("loadLength", loadFileRecord.getLoadLength());
+        values.put("fileLength", loadFileRecord.getFileLength());
         mDbHelper.getWritableDatabase().insert(FILE_TABLE_NAME, null, values);
     }
 
-    public static void updateLoadFileRecordTime(String fName, int state, long lTime) {
+    public static void updateLoadFileRecordTime(LoadFileRecord loadFileRecord) {
         ContentValues values = new ContentValues();
-        values.put("latestTime", lTime);
-        values.put("state", state);
-        mDbHelper.getWritableDatabase().update(FILE_TABLE_NAME, values, "name=?", new String[]{fName});
+        values.put("latestTime", loadFileRecord.getlTime());
+        values.put("state", CommandUtil.getStateByString(loadFileRecord.getState()));
+        values.put("loadLength", loadFileRecord.getLoadLength());
+        mDbHelper.getWritableDatabase().update(FILE_TABLE_NAME, values, "name=?",
+                new String[]{loadFileRecord.getName()});
     }
 
 
@@ -61,6 +65,8 @@ public class DataBaseUtil {
             loadFileRecord.setState(CommandUtil.getStateByInt(cursor.getInt(4)));
             loadFileRecord.setsTime(cursor.getLong(5));
             loadFileRecord.setlTime(cursor.getLong(6));
+            loadFileRecord.setLoadLength(cursor.getLong(7));
+            loadFileRecord.setFileLength(cursor.getLong(8));
             loadFileRecords.add(loadFileRecord);
         } while (cursor.moveToNext());
         cursor.close();

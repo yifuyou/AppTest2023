@@ -23,7 +23,7 @@ public class CommandUtil {
                 return Constants.STATE_STRING_LOAD_FAILED;
             case Constants.STATE_INT_LOAD_UNFINISH:
                 return Constants.STATE_STRING_LOAD_UNFINISH;
-            default:return "";
+            default: return "";
         }
     }
 
@@ -36,6 +36,7 @@ public class CommandUtil {
                 return Constants.STATE_INT_LOAD_SUCCESS;
             case Constants.STATE_STRING_LOAD_FAILED:
                 return Constants.STATE_INT_LOAD_FAILED;
+            case Constants.STATE_STRING_LOADING:
             default:
                 return Constants.STATE_INT_LOAD_UNFINISH;
         }
@@ -46,7 +47,8 @@ public class CommandUtil {
         Date cTime = new Date(System.currentTimeMillis());
         Date today = new Date(cTime.getYear(), cTime.getMonth(), cTime.getDate());
         if (date.compareTo(today)>0) {
-            return date.getHours()+":"+date.getMinutes();
+            return (date.getHours()<10 ? "0" + date.getHours() : date.getHours()) + ":"
+                    + (date.getMinutes()<10 ? "0" + date.getMinutes() : date.getMinutes());
         }
 
         int year = date.getYear() > 1900 ? date.getYear() : date.getYear() + 1900;

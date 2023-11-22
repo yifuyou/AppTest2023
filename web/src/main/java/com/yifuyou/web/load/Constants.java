@@ -17,6 +17,6 @@ public class Constants {
 
     public static final String STATE_STRING_LOAD_SUCCESS = "已完成";
     public static final String STATE_STRING_LOAD_FAILED = "下载失败";
-    public static final String STATE_STRING_LOAD_UNFINISH = "未下载完成";
     public static final String STATE_STRING_LOADING = "正在下载";
+    public static final String STATE_STRING_LOAD_UNFINISH = "未下载完成";
 }

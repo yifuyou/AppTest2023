@@ -1,5 +1,17 @@
 package com.yifuyou.web;
 
+import java.util.Locale;
+
+import com.alibaba.android.arouter.facade.annotation.Autowired;
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
+import com.yifuyou.web.databinding.WebLayoutBinding;
+import com.yifuyou.web.load.Constants;
+import com.yifuyou.web.load.DownloadUtil;
+import com.yifuyou.web.load.FileUtils;
+import com.yifuyou.web.load.LoadHandler;
+import com.yifuyou.web.load.SharedPreferenceUtil;
+
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
@@ -24,18 +36,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-
-import com.alibaba.android.arouter.facade.annotation.Autowired;
-import com.alibaba.android.arouter.facade.annotation.Route;
-import com.alibaba.android.arouter.launcher.ARouter;
-import com.yifuyou.web.databinding.WebLayoutBinding;
-import com.yifuyou.web.load.Constants;
-import com.yifuyou.web.load.DownloadUtil;
-import com.yifuyou.web.load.FileUtils;
-import com.yifuyou.web.load.LoadHandler;
-import com.yifuyou.web.load.SharedPreferenceUtil;
-
-import java.util.Locale;
 
 @Route(path = "/web/main/")
 public class WebActivity extends AppCompatActivity {
@@ -309,8 +309,6 @@ public class WebActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        Log.i(TAG, "onDestroy");
-        DownloadUtil.release();
         super.onDestroy();
     }
 }

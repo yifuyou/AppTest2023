@@ -11,6 +11,8 @@ class MyApplication : Application() {
             ARouter.openDebug()
             ARouter.openLog()
         }
+        Thread.getDefaultUncaughtExceptionHandler()
+        Thread.setDefaultUncaughtExceptionHandler(ExceptionHandler())
         ARouter.init(this)
         WebInitUtil.init(this)
     }

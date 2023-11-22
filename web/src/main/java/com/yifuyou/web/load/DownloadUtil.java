@@ -1,12 +1,18 @@
 package com.yifuyou.web.load;
 
-import com.yifuyou.web.load.db.DataBaseUtil;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.yifuyou.web.load.db.DataBaseUtil;
+
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+
 public class DownloadUtil {
+    private static final String TAG = "DownloadUtil";
+
     public static final String TASK_RECORD = "SP_LOAD_FILE_RECORD";
 
     private final static HashMap<String, LoadThread> LOAD_THREAD_HASH_MAP = new HashMap<>();
@@ -26,16 +32,25 @@ public class DownloadUtil {
     public static void start(String loadId) {
         if (LOAD_THREAD_HASH_MAP.containsKey(loadId)) {
             LoadThread runnable = LOAD_THREAD_HASH_MAP.get(loadId);
-            LoadFileRecord fileInfo = runnable.getFileInfo();
             PoolFactory.postTask(runnable);
-
-            fileInfo.addObserver((o, arg)->{
-                if ((long)arg==fileInfo.getFileLength()) {
-                    DataBaseUtil.updateLoadFileRecordTime(fileInfo.getName(),
-                            Constants.STATE_INT_LOAD_SUCCESS, fileInfo.getlTime());
-                }
-            });
         }
+    }
+
+    public static boolean resumeLoad(@NonNull LoadFileRecord loadFileRecord) {
+        if (loadFileRecord.isLoading() || loadFileRecord.isFinished()) {
+            Log.i(TAG, "resumeLoad: not need resume.");
+            return false;
+        }
+
+        LoadThread loadThread = LoadThread.Builder()
+                .setUrl(loadFileRecord.getUrl())
+                .setContentLength(loadFileRecord.getFileLength());
+        String loadId = loadThread.buildTask();
+        loadThread.setFileInfo(loadFileRecord);
+        LOAD_THREAD_HASH_MAP.put(loadId, loadThread);
+
+        PoolFactory.postTask(loadThread);
+        return true;
     }
 
     public static List<LoadFileRecord> getLoadingRecord() {
@@ -48,8 +63,8 @@ public class DownloadUtil {
 
     public static void release() {
         LOAD_THREAD_HASH_MAP.forEach((id, loadT)-> {
-            DataBaseUtil.updateLoadFileRecordTime(loadT.getFileInfo().getName(),
-                    Constants.STATE_INT_LOAD_UNFINISH, loadT.getLatestTime());
+            loadT.getFileInfo().setState(Constants.STATE_STRING_LOAD_SUCCESS);
+            DataBaseUtil.updateLoadFileRecordTime(loadT.getFileInfo());
         });
 
         SharedPreferenceUtil.release();
