@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2023. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+  ~ Just for learn.
+  -->
+
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/home_nav"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.yifuyou.test_main.main.main.fragment.HomeFragment"
+        android:label="HomeFragment" />
+    <fragment
+        android:id="@+id/findFragment"
+        android:name="com.yifuyou.test_main.main.main.fragment.FindFragment"
+        android:label="FindFragment" />
+    <fragment
+        android:id="@+id/communityFragment"
+        android:name="com.yifuyou.test_main.main.main.fragment.CommunityFragment"
+        android:label="CommunityFragment" />
+    <fragment
+        android:id="@+id/userFragment"
+        android:name="com.yifuyou.test_main.main.main.fragment.UserFragment"
+        android:label="UserFragment" />
+</navigation>
