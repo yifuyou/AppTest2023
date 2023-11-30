@@ -9,4 +9,8 @@ ARouter（不同组件界面跳转）
 RecyclerView + dataBinding
 
 ## 界面展示
+homeFragment
+ ![homeFragment](./imgs/homeFragment.jpg)
 
+findFragment
+ ![findFragment](./imgs/findFragment.jpg) 
