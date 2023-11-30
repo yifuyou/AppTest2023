@@ -3,14 +3,7 @@
  * Just for learn.
  */
 
-package com.yifuyou.web.load;
-
-import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
-
-import com.yifuyou.web.databinding.LoadItemInfoBinding;
-import com.yifuyou.web.load.db.DataBaseUtil;
+package com.yifuyou.web.loadPg;
 
 import android.os.Handler;
 import android.util.Log;
@@ -21,8 +14,19 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.yifuyou.web.Constants;
+import com.yifuyou.web.databinding.LoadItemInfoBinding;
+import com.yifuyou.web.db.DataBaseUtil;
+import com.yifuyou.web.load.LoadFileRecord;
+import com.yifuyou.web.util.CommandUtil;
+import com.yifuyou.web.util.DownloadUtil;
 
-public class LoadRcAdapter extends RecyclerView.Adapter<LoadRcAdapter.ViewHolder> {
+import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
+
+
+public class LoadRcAdapter extends RecyclerView.Adapter<LoadRcAdapter.LoadItemViewHolder> {
     private static final String TAG = "LoadRcAdapter";
 
     List<LoadFileRecord> mData;
@@ -51,19 +55,20 @@ public class LoadRcAdapter extends RecyclerView.Adapter<LoadRcAdapter.ViewHolder
             }
             return 1;
         });
+
     }
 
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public LoadItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LoadItemInfoBinding dataBinding =
-                LoadItemInfoBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        return new ViewHolder(dataBinding);
+            LoadItemInfoBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new LoadItemViewHolder(dataBinding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull LoadItemViewHolder holder, int position) {
         LoadFileRecord loadFileRecord = mData.get(position);
         setItemView(holder, loadFileRecord, false);
 
@@ -72,6 +77,7 @@ public class LoadRcAdapter extends RecyclerView.Adapter<LoadRcAdapter.ViewHolder
             public boolean onLongClick(View v) {
                 Log.i(TAG, "onLongClick: ");
                 if (DownloadUtil.resumeLoad(loadFileRecord)) {
+                    holder.startIndex = loadFileRecord.getLoadLength();
                     setItemView(holder, loadFileRecord, true);
                 }
                 return false;
@@ -79,7 +85,7 @@ public class LoadRcAdapter extends RecyclerView.Adapter<LoadRcAdapter.ViewHolder
         });
     }
 
-    private void setItemView(ViewHolder holder, LoadFileRecord loadFileRecord, boolean isResume){
+    private void setItemView(LoadItemViewHolder holder, LoadFileRecord loadFileRecord, boolean isResume){
         holder.mBinding.itemName.setText(loadFileRecord.getName());
         if (loadFileRecord.isFinished()) {
             holder.mBinding.itemState.setText(loadFileRecord.getState());
@@ -94,7 +100,11 @@ public class LoadRcAdapter extends RecyclerView.Adapter<LoadRcAdapter.ViewHolder
             @Override
             public void update(Observable o, Object arg) {
                 mHandler.post(()->{
-                    setStateAndProgress(holder.mBinding, loadFileRecord, (long)arg);
+                    long newCount = (long)arg;
+                    if (isResume) {
+                        newCount += holder.startIndex;
+                    }
+                    setStateAndProgress(holder.mBinding, loadFileRecord, newCount);
                 });
             }
         });
@@ -112,8 +122,15 @@ public class LoadRcAdapter extends RecyclerView.Adapter<LoadRcAdapter.ViewHolder
 
 
     @Override
-    public void onViewDetachedFromWindow(@NonNull ViewHolder holder) {
+    public void onViewDetachedFromWindow(@NonNull LoadItemViewHolder holder) {
         super.onViewDetachedFromWindow(holder);
+        Log.i(TAG, "onViewDetachedFromWindow: ");
+    }
+
+    @Override
+    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
+        Log.i(TAG, "onDetachedFromRecyclerView: ");
     }
 
     @Override
@@ -121,10 +138,12 @@ public class LoadRcAdapter extends RecyclerView.Adapter<LoadRcAdapter.ViewHolder
         return mData != null ? mData.size():0;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class LoadItemViewHolder extends RecyclerView.ViewHolder{
         LoadItemInfoBinding mBinding;
 
-        public ViewHolder(@NonNull LoadItemInfoBinding binding) {
+        long startIndex = 0;
+
+        public LoadItemViewHolder(@NonNull LoadItemInfoBinding binding) {
             super(binding.getRoot());
             mBinding = binding;
         }

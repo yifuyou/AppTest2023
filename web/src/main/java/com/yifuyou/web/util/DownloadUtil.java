@@ -1,14 +1,24 @@
-package com.yifuyou.web.load;
+/*
+ * Copyright (c) 2023. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+ * Just for learn.
+ */
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import com.yifuyou.web.load.db.DataBaseUtil;
+package com.yifuyou.web.util;
 
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+
+import com.yifuyou.web.Constants;
+import com.yifuyou.web.db.DataBaseUtil;
+import com.yifuyou.web.db.SharedPreferenceUtil;
+import com.yifuyou.web.load.LoadFileRecord;
+import com.yifuyou.web.load.LoadThread;
+import com.yifuyou.web.load.PoolFactory;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class DownloadUtil {
     private static final String TAG = "DownloadUtil";

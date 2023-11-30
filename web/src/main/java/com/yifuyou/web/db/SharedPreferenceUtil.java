@@ -1,4 +1,9 @@
-package com.yifuyou.web.load;
+/*
+ * Copyright (c) 2023. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+ * Just for learn.
+ */
+
+package com.yifuyou.web.db;
 
 import android.content.Context;
 import android.content.SharedPreferences;

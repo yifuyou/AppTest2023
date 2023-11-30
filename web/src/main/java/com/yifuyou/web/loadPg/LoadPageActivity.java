@@ -1,4 +1,9 @@
-package com.yifuyou.web;
+/*
+ * Copyright (c) 2023. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+ * Just for learn.
+ */
+
+package com.yifuyou.web.loadPg;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,9 +13,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.yifuyou.web.R;
 import com.yifuyou.web.databinding.LoadPgLayoutBinding;
-import com.yifuyou.web.load.LoadRcAdapter;
 
+@Route(path = "/web/loadPage/")
 public class LoadPageActivity extends AppCompatActivity {
 
     LoadPgLayoutBinding dataBinding;

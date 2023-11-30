@@ -1,5 +1,7 @@
 package com.yifuyou.web.load;
 
+import com.yifuyou.web.Constants;
+
 import java.util.Observable;
 
 

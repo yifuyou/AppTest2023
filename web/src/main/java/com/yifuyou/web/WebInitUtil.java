@@ -1,10 +1,10 @@
 package com.yifuyou.web;
 
-import com.yifuyou.web.load.DownloadUtil;
-import com.yifuyou.web.load.LoadHandler;
-import com.yifuyou.web.load.db.DataBaseUtil;
-
 import android.content.Context;
+
+import com.yifuyou.web.db.DataBaseUtil;
+import com.yifuyou.web.load.LoadHandler;
+import com.yifuyou.web.util.DownloadUtil;
 
 public class WebInitUtil {
 

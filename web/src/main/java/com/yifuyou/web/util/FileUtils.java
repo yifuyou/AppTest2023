@@ -1,4 +1,9 @@
-package com.yifuyou.web.load;
+/*
+ * Copyright (c) 2023. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+ * Just for learn.
+ */
+
+package com.yifuyou.web.util;
 
 import android.os.Environment;
 import android.text.TextUtils;

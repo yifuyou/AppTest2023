@@ -1,15 +1,18 @@
 package com.yifuyou.web.load;
 
+import android.os.Bundle;
+import android.os.Message;
+import android.util.Log;
+
+import com.yifuyou.web.Constants;
+import com.yifuyou.web.db.DataBaseUtil;
+import com.yifuyou.web.util.CommandUtil;
+import com.yifuyou.web.util.FileUtils;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
-import com.yifuyou.web.load.db.DataBaseUtil;
-
-import android.os.Bundle;
-import android.os.Message;
-import android.util.Log;
 
 import okhttp3.Call;
 import okhttp3.OkHttpClient;

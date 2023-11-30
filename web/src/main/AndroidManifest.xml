@@ -11,10 +11,10 @@
     <application
         android:networkSecurityConfig="@xml/network_security_config"
         android:requestLegacyExternalStorage="true">
-        <activity android:name=".WebActivity"
+        <activity android:name=".webPg.WebActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
             android:launchMode="singleTop"/>
-        <activity android:name=".LoadPageActivity"
+        <activity android:name=".loadPg.LoadPageActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
     </application>
 </manifest>

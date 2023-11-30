@@ -1,19 +1,13 @@
-package com.yifuyou.web;
+/*
+ * Copyright (c) 2023. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+ * Just for learn.
+ */
 
-import java.util.Locale;
-
-import com.alibaba.android.arouter.facade.annotation.Autowired;
-import com.alibaba.android.arouter.facade.annotation.Route;
-import com.alibaba.android.arouter.launcher.ARouter;
-import com.yifuyou.web.databinding.WebLayoutBinding;
-import com.yifuyou.web.load.Constants;
-import com.yifuyou.web.load.DownloadUtil;
-import com.yifuyou.web.load.FileUtils;
-import com.yifuyou.web.load.LoadHandler;
-import com.yifuyou.web.load.SharedPreferenceUtil;
+package com.yifuyou.web.webPg;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -37,6 +31,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.databinding.DataBindingUtil;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
+import com.yifuyou.web.Constants;
+import com.yifuyou.web.R;
+import com.yifuyou.web.databinding.WebLayoutBinding;
+import com.yifuyou.web.db.SharedPreferenceUtil;
+import com.yifuyou.web.load.LoadHandler;
+import com.yifuyou.web.loadPg.LoadPageActivity;
+import com.yifuyou.web.util.DownloadUtil;
+import com.yifuyou.web.util.FileUtils;
+
+import java.util.Locale;
+
 @Route(path = "/web/main/")
 public class WebActivity extends AppCompatActivity {
     private static final String TAG = "WebActivity";
@@ -59,7 +67,6 @@ public class WebActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         dataBinding = DataBindingUtil.setContentView(this, R.layout.web_layout);
         progressBar = dataBinding.progressBar;
         progressBar.setVisibility(View.GONE);
@@ -161,8 +168,8 @@ public class WebActivity extends AppCompatActivity {
         ARouter.getInstance().inject(this);
         trySetUrl(intentUrl);
         dataBinding.imgIcon.setOnClickListener( v -> {
-//                    Intent intent = new Intent(this, LoadPageActivity.class);
-//                    startActivity(intent);
+                    Intent intent = new Intent(this, LoadPageActivity.class);
+                    startActivity(intent);
 
 
             }

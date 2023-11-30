@@ -1,15 +1,15 @@
-package com.yifuyou.web.load.db;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import com.yifuyou.web.load.CommandUtil;
-import com.yifuyou.web.load.LoadFileRecord;
+package com.yifuyou.web.db;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
+
+import com.yifuyou.web.load.LoadFileRecord;
+import com.yifuyou.web.util.CommandUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DataBaseUtil {
     public static final String TAG = "DataBaseUtil";

@@ -1,4 +1,4 @@
-package com.yifuyou.web.load.db;
+package com.yifuyou.web.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

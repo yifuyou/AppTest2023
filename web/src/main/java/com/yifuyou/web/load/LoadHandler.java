@@ -17,11 +17,8 @@ public class LoadHandler extends Handler {
     private static LoadHandler instance;
 
     private static final Object handleInitLock = new Object();
-    private static final Object initLock = new Object();
 
     private static HashMap<String, CallBack> callBacks;
-
-    private static boolean initing = false;
 
     private static final Thread handlerThread = new WebLoadThread() {
         @Override
@@ -29,7 +26,6 @@ public class LoadHandler extends Handler {
             super.run();
             Looper.prepare();
             instance = new LoadHandler(Looper.myLooper());
-            initing = false;
             Looper.loop();
         }
     };
@@ -45,7 +41,7 @@ public class LoadHandler extends Handler {
         }
 
         synchronized (handleInitLock) {
-            if (instance==null && !initing) {
+            if (instance == null) {
                 handlerThread.start();
                 try {
                     handleInitLock.wait(100L);
@@ -53,7 +49,7 @@ public class LoadHandler extends Handler {
                     e.printStackTrace();
                 }
             } else {
-                throw new NullPointerException("doing init!");
+                throw new NullPointerException("already init!");
             }
         }
     }
