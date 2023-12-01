@@ -167,13 +167,8 @@ public class WebActivity extends AppCompatActivity {
 
         ARouter.getInstance().inject(this);
         trySetUrl(intentUrl);
-        dataBinding.imgIcon.setOnClickListener( v -> {
-                    Intent intent = new Intent(this, LoadPageActivity.class);
-                    startActivity(intent);
 
-
-            }
-        );
+        dataBinding.downloadingBox.setVisibility(View.GONE);
 
         SharedPreferenceUtil.getOrCreateSp(getBaseContext(), DownloadUtil.TASK_RECORD, Context.MODE_PRIVATE);
     }
@@ -203,7 +198,11 @@ public class WebActivity extends AppCompatActivity {
         dataBinding.downloadingBox.setVisibility(View.VISIBLE);
         dataBinding.downloadingPBar.setVisibility(View.VISIBLE);
         dataBinding.imgIcon.setColorFilter(Color.argb(0,0,0,0));
-
+        dataBinding.imgIcon.setOnClickListener( v -> {
+                Intent intent = new Intent(this, LoadPageActivity.class);
+                startActivity(intent);
+            }
+        );
     }
 
     private void loading(int process) {

@@ -1,10 +1,16 @@
-package com.yifuyou.test_main.main.main.fragment
+/*
+ * Copyright (c) 2023. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+ * Just for learn.
+ */
+
+package com.yifuyou.test_main.main.main.fragment.find
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.yifuyou.test_main.R
 import com.yifuyou.test_main.databinding.FragmentItemListBinding
 import com.yifuyou.test_main.main.main.adapter.FindPgMoreAdapter
+import com.yifuyou.test_main.main.main.fragment.BaseFragment
 import com.yifuyou.test_main.main.main.placeholder.MoreContent
 
 class FindPgMoreFragment : BaseFragment<FragmentItemListBinding>() {

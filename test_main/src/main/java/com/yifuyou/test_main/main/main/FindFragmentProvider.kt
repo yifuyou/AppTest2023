@@ -2,8 +2,8 @@ package com.yifuyou.test_main.main.main
 
 import androidx.databinding.ViewDataBinding
 import com.yifuyou.test_main.main.main.fragment.BaseFragment
-import com.yifuyou.test_main.main.main.fragment.FindPgMoreFragment
-import com.yifuyou.test_main.main.main.fragment.FindPgPopularKindItemFragment
+import com.yifuyou.test_main.main.main.fragment.find.FindPgMoreFragment
+import com.yifuyou.test_main.main.main.fragment.find.FindPgPopularKindItemFragment
 
 class FindFragmentProvider {
     val allFragments : HashMap<Int, BaseFragment<out ViewDataBinding>>

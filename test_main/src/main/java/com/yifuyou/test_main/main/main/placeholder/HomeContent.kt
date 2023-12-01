@@ -1,37 +1,43 @@
 package com.yifuyou.test_main.main.main.placeholder
 
-import com.yifuyou.test_main.R
+import android.app.Application
+import com.google.gson.GsonBuilder
+import com.yifuyou.test_main.main.main.fragment.home.PowerDataItem
+import org.json.JSONObject
+
 
 object HomeContent {
 
     val cObjects : MutableList<String> = ArrayList()
 
-    val cData : MutableMap<String, DataItem> = HashMap()
+    val cData : MutableMap<String, PowerDataItem> = HashMap()
 
     var count : Int = 0
 
-    init {
-        for(i in 1..8){
-            createNewData("功能${i}", "info${i}", R.drawable.main_notify)
+    fun initData(context: Application) {
+        val jsonAss = context.assets.open("PowerComponent.json")
+        val available = jsonAss.available()
+        val bytes : ByteArray = ByteArray(available)
+
+        val readNBytes = jsonAss.read(bytes)
+        if (readNBytes <= 0) return
+        val jsonObject = JSONObject(String(bytes))
+        val count = jsonObject.getInt("listCount")
+
+        val array = jsonObject.getJSONArray("list")
+        if (array.length() >= count)
+        for (index in 0 until count) {
+            addNewItem(GsonBuilder().create().fromJson(array.get(index).toString(), PowerDataItem::class.java))
         }
     }
 
-    // 首页能力
-    data class DataItem(var name : String, var info : String, var icon : Int) {
-        override fun toString(): String {
-            return super.toString()
-        }
-    }
-
-    fun createNewData(name : String, info : String, icon : Int) {
-        val item = DataItem(name, info, icon)
-
-        if (cObjects.contains(name)) {
-            cObjects.remove(name)
+    fun addNewItem(item : PowerDataItem) {
+        if (cObjects.contains(item.name)) {
+            cObjects.remove(item.name)
         }
 
-        cObjects.add(name)
-        cData[name] = item
+        cObjects.add(item.name)
+        cData[item.name] = item
         count = cObjects.size
     }
 }

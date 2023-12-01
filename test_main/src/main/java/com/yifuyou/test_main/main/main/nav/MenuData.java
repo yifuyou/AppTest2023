@@ -1,14 +1,14 @@
 package com.yifuyou.test_main.main.main.nav;
 
+import com.yifuyou.test_main.main.main.FragmentItemName;
+import com.yifuyou.test_main.main.main.fragment.community.CommunityFragment;
+import com.yifuyou.test_main.main.main.fragment.find.FindFragment;
+import com.yifuyou.test_main.main.main.fragment.home.HomeFragment;
+import com.yifuyou.test_main.main.main.fragment.user.UserFragment;
+import com.yifuyou.test_main.main.main.utls.CommandUtil;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import com.yifuyou.test_main.main.main.FragmentItemName;
-import com.yifuyou.test_main.main.main.fragment.CommunityFragment;
-import com.yifuyou.test_main.main.main.fragment.FindFragment;
-import com.yifuyou.test_main.main.main.fragment.HomeFragment;
-import com.yifuyou.test_main.main.main.fragment.UserFragment;
-import com.yifuyou.test_main.main.main.utls.CommandUtil;
 
 /**
  * info

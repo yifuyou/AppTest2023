@@ -10,18 +10,18 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.yifuyou.test_main.main.main.fragment.HomeFragment"
+        android:name="com.yifuyou.test_main.main.main.fragment.home.HomeFragment"
         android:label="HomeFragment" />
     <fragment
         android:id="@+id/findFragment"
-        android:name="com.yifuyou.test_main.main.main.fragment.FindFragment"
+        android:name="com.yifuyou.test_main.main.main.fragment.find.FindFragment"
         android:label="FindFragment" />
     <fragment
         android:id="@+id/communityFragment"
-        android:name="com.yifuyou.test_main.main.main.fragment.CommunityFragment"
+        android:name="com.yifuyou.test_main.main.main.fragment.community.CommunityFragment"
         android:label="CommunityFragment" />
     <fragment
         android:id="@+id/userFragment"
-        android:name="com.yifuyou.test_main.main.main.fragment.UserFragment"
+        android:name="com.yifuyou.test_main.main.main.fragment.user.UserFragment"
         android:label="UserFragment" />
 </navigation>

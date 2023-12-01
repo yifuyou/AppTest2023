@@ -1,10 +1,13 @@
-package com.yifuyou.test_main.main.main.fragment
+/*
+ * Copyright (c) 2023. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+ * Just for learn.
+ */
 
-import android.graphics.Color
+package com.yifuyou.test_main.main.main.fragment.home
+
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.GridLayout
-import android.widget.Toast
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.yifuyou.test_main.R
@@ -12,6 +15,7 @@ import com.yifuyou.test_main.databinding.FragmentHomeBinding
 import com.yifuyou.test_main.databinding.HomeComponentLayoutBinding
 import com.yifuyou.test_main.main.main.FragmentItemName
 import com.yifuyou.test_main.main.main.FragmentRouterPath
+import com.yifuyou.test_main.main.main.fragment.BaseFragment
 import com.yifuyou.test_main.main.main.placeholder.HomeContent
 
 @Route(path = FragmentRouterPath.Home.PAGE_HOME)
@@ -40,18 +44,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                         Log.e("TAG", "initView: $count" )
                         break
                     }
+                    val model = ComponentModel()
+                    val name = HomeContent.cObjects[count]
+                    val dataItem = HomeContent.cData[name]
+                    model.setDataItem(dataItem!!)
+                    model.context = context
+
                     val componentBinding =
                         HomeComponentLayoutBinding.inflate(LayoutInflater.from(context), this, false)
                     with(componentBinding) {
-                        val name = HomeContent.cObjects[count]
-                        componentName.text = name
-                        val dataItem = HomeContent.cData[name]
-                        componentIcon.setImageResource(dataItem!!.icon)
-                        componentIcon.setColorFilter(Color.BLUE)
-                        componentIcon.setOnLongClickListener {
-                            Toast.makeText(context, dataItem.info, Toast.LENGTH_SHORT).show()
-                            true
-                        }
+                        item = model
                         val params = GridLayout.LayoutParams()
                         params.columnSpec = GridLayout.spec(jIndex-1)
                         params.rowSpec = GridLayout.spec(index-1, 1f)

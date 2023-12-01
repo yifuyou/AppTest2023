@@ -34,12 +34,12 @@
         </LinearLayout>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/dd_list"
-            android:name="com.yifuyou.test_main.main.main.fragment.FindPgPopularKindItemFragment"
+            android:name="com.yifuyou.test_main.main.main.fragment.find.FindPgPopularKindItemFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layoutManager="LinearLayoutManager"
             android:orientation="horizontal"
-            tools:context=".main.main.fragment.FindPgPopularKindItemFragment"
+            tools:context=".main.main.fragment.find.FindPgPopularKindItemFragment"
             tools:listitem="@layout/fragment_popular_kind_item" />
 
 

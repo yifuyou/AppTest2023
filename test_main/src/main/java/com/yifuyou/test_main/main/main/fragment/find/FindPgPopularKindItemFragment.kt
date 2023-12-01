@@ -1,4 +1,9 @@
-package com.yifuyou.test_main.main.main.fragment
+/*
+ * Copyright (c) 2023. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+ * Just for learn.
+ */
+
+package com.yifuyou.test_main.main.main.fragment.find
 
 import android.os.Bundle
 import android.view.View
@@ -8,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.yifuyou.test_main.R
 import com.yifuyou.test_main.databinding.FragmentPopularKindItemListBinding
 import com.yifuyou.test_main.main.main.adapter.FindPgPopularKindItemRvAdapter
+import com.yifuyou.test_main.main.main.fragment.BaseFragment
 import com.yifuyou.test_main.main.main.placeholder.PlaceholderContent
 
 /**

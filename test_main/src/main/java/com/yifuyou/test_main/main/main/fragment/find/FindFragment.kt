@@ -1,4 +1,9 @@
-package com.yifuyou.test_main.main.main.fragment
+/*
+ * Copyright (c) 2023. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+ * Just for learn.
+ */
+
+package com.yifuyou.test_main.main.main.fragment.find
 
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.yifuyou.test_main.R
@@ -6,6 +11,7 @@ import com.yifuyou.test_main.databinding.FragmentFindBinding
 import com.yifuyou.test_main.main.main.FindFragmentProvider
 import com.yifuyou.test_main.main.main.FragmentItemName
 import com.yifuyou.test_main.main.main.FragmentRouterPath
+import com.yifuyou.test_main.main.main.fragment.BaseFragment
 
 @Route(path = FragmentRouterPath.Home.PAGE_FIND)
 class FindFragment : BaseFragment<FragmentFindBinding>() {
